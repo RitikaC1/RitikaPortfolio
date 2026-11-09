@@ -2,10 +2,7 @@
 
 A responsive personal portfolio built with React, Vite, and CSS, ready for GitHub Pages.
 
-## Edit your information
-
-Open `src/main.jsx` and edit the `profile`, `skills`, and `projects` objects near the top. Replace project placeholders with your actual work. Add your LinkedIn and email if you want them public. For a resume, put `resume.pdf` in `public/` and set `resume: '/resume.pdf'`.
-
+## Edit your 
 ## Run locally
 
 Install Node.js 22 or later. Then run:
