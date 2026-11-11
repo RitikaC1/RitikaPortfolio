@@ -38,6 +38,21 @@ const education = [
 const nav = ['About','Skills','Experience','Projects','Education','Contact'];
 function Portrait(){const [failed,setFailed]=React.useState(false);return <div className="portraitShell">{!failed?<img src={profile.photo} alt="Portrait of Ritika Chaube" onError={()=>setFailed(true)}/>:<div className="portraitFallback"><span>RC</span><small>Add your photo as public/profile.jpg</small></div>}</div>}
 function App(){
+  
+React.useEffect(() => {
+  const url = new URL(window.location.href);
+
+  if (url.searchParams.has("utm_source")) {
+    url.searchParams.delete("utm_source");
+
+    window.history.replaceState(
+      window.history.state,
+      "",
+      url.pathname + url.search + url.hash
+    );
+  }
+}, []);
+
 const [open,setOpen]=React.useState(false);
 const [theme,setTheme]=React.useState(()=>{try{return localStorage.getItem('ritika-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch{return 'dark'}});
 React.useEffect(()=>{document.documentElement.dataset.theme=theme;try{localStorage.setItem('ritika-theme',theme)}catch{}},[theme]);
