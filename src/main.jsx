@@ -21,7 +21,7 @@ const skills = [
 ];
 const experience = [
   {role:'Graduate Assistant', company:'University of Florida', date:'May 2026 – Present', description:'Designed and deployed a multi-agent multimodal RAG pipeline, reducing retrieval latency by 50%. Built cross-modal retrieval with CLIP, SBERT and Qdrant. Mentored 60+ students as a teaching assistant for Cornell Tech’s Break Through Tech.'},
-  {role:'Software Engineer Apprentice', company:'American Express', date:'Jan 2026 – May 2026', description:'Architected a seven-service distributed system using PostgreSQL, Docker and Nginx. Built real-time compliance ingestion and secure JWT-based reporting, with 100% pass rate in REST API testing.'},
+  {role:'Software Engineer Apprentice', company:'American Express x UF WiCSE', date:'Jan 2026 – May 2026', description:'Architected a seven-service distributed system using PostgreSQL, Docker and Nginx. Built real-time compliance ingestion and secure JWT-based reporting, with 100% pass rate in REST API testing.'},
   {role:'Jr. Software Engineer', company:'Cognizant', date:'Oct 2023 – Jul 2025', description:'Improved pipeline efficiency by 20%, shortened a key workflow from 15 weeks to 4 weeks, and supported a production module with 99%+ uptime and 4,000+ daily interactions. Mentored four junior developers.'},
   {role:'Software Engineer Trainee', company:'Cognizant', date:'Oct 2022 – Sep 2023', description:'Developed 10+ Spring Boot REST APIs and automated SQL pipelines, saving seven business days of manual effort per cycle. Resolved SSO authentication issues affecting 1,500+ users.'},
   {role:'Full Stack Engineering Intern', company:'Cognizant', date:'Feb 2022 – Aug 2022', description:'Built five microservice APIs with 95% test coverage and co-led a five-person team developing a banking application with Jenkins and AWS CI/CD.'},
@@ -61,7 +61,40 @@ return <>
 <main><section className="hero container" id="home"><div className="heroGlow"/><div className="gridFloor" aria-hidden="true"/><div className="heroContent"><div className="eyebrow"><span className="statusDot"/> <span className="mono">~/ritika-chaube/portfolio</span> <span className="promptCaret">▍</span></div><p className="heroHello"><span className="mono cyan">&gt; </span>Hello, I'm</p><h1>Ritika <span>Chaube.</span></h1><p className="heroRole">{profile.headline}</p><p className="heroIntro">{profile.intro}</p><div className="actions"><a className="primary" href="#projects">Explore my work <ArrowUpRight size={18}/></a><a className="secondary" href={profile.resume} target="_blank" rel="noreferrer">My resume <Download size={18}/></a></div><div className="socials"><a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={21}/></a><a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={21}/></a><a href={'mailto:'+profile.email} aria-label="Email"><Mail size={21}/></a><span className="socialLine"/><span>BUILDING SYSTEMS THAT MATTER</span></div></div><div className="heroPortrait"><div className="portraitTerminal"><Terminal size={14}/> profile.jsx <span className="terminalDots">● ● ●</span></div><Portrait/><div className="portraitCaption">ENGINEER / BUILDER / RESEARCHER</div></div><a href="#about" className="scrollHint">SCROLL TO EXPLORE <ArrowDown size={15}/></a></section>
 <section className="section alt" id="about"><div className="container"><div className="sectionLabel">01 / GET TO KNOW ME</div><div className="aboutGrid"><div><h2>Engineering with <span>impact.</span></h2><div className="accentLine"/></div><div><p className="largeText">{profile.about}</p><p className="muted">From backend services to AI-powered retrieval, I focus on performance, scalability, and thoughtful engineering.</p><a className="textLink" href={profile.github} target="_blank" rel="noreferrer">Explore my GitHub <ArrowUpRight size={17}/></a></div></div></div></section>
 <section className="section" id="skills"><div className="container"><div className="sectionLabel">02 / TECHNICAL TOOLKIT</div><h2>Skills & <span>technologies.</span></h2><p className="sectionIntro">Technologies I have used across engineering, research, and production systems.</p><div className="skillsGrid">{skills.map((s,i)=><div className="skill skillDetailed" key={s.title}><span className="skillNum">0{i+1}</span><Code2 size={22}/><div><strong>{s.title}</strong><p>{s.items}</p></div></div>)}</div></div></section>
-<section className="section alt" id="experience"><div className="container"><div className="sectionLabel">03 / PROFESSIONAL JOURNEY</div><h2>Where I've <span>worked.</span></h2><div className="timeline">{experience.map((e,i)=><article className="timelineItem" key={i}><div className="timelineIcon"><BriefcaseBusiness size={19}/></div><div className="timelineContent"><div className="timelineHead"><div><h3>{e.role}</h3><strong>{e.company}</strong></div><span>{e.date}</span></div><p>{e.description}</p></div></article>)}</div></div></section>
+<section className="section alt" id="experience"><div className="container"><div className="sectionLabel">03 / PROFESSIONAL JOURNEY</div><h2>Where I've <span>worked.</span></h2><div className="timeline">
+<div className="timeline">
+  {experience.map((e, i) => (
+    <article className="timelineItem" key={i}>
+      <div className="timelineIcon">
+        <BriefcaseBusiness size={19} />
+      </div>
+
+      <div className="timelineContent">
+        <div className="timelineHead">
+          <div className="experienceCompany">
+            <div className="companyLogo">
+              <img
+                src={`${import.meta.env.BASE_URL}logos/${e.logo}`}
+                alt={`${e.company} logo`}
+                loading="lazy"
+              />
+            </div>
+
+            <div>
+              <h3>{e.role}</h3>
+              <strong>{e.company}</strong>
+            </div>
+          </div>
+
+          <span>{e.date}</span>
+        </div>
+
+        <p>{e.description}</p>
+      </div>
+    </article>
+  ))}
+</div>
+</div></div></section>
 <section className="section" id="projects"><div className="container"><div className="sectionLabel">04 / SELECTED WORK</div><div className="sectionHeading"><div><h2>Things I've <span>built.</span></h2><p className="sectionIntro">Selected projects and applied research from my resume.</p></div><a className="textLink" href={profile.github} target="_blank" rel="noreferrer">GitHub repositories <ArrowUpRight size={17}/></a></div><div className="projectGrid">{projects.map(p=><article className="project" key={p.number}><div className="projectTop"><span>{p.number} / {p.type}</span><Sparkles size={20}/></div><div className="projectVisual"><Code2 size={46}/></div><h3>{p.title}</h3><p>{p.description}</p><div className="projectBottom"><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div>{p.link&&<a href={p.link} target="_blank" rel="noreferrer" aria-label={'View '+p.title}><ArrowUpRight/></a>}</div></article>)}</div><p className="muted projectNote">Individual project links can be added in src/main.jsx when you have their repository URLs.</p></div></section>
 <section className="section alt" id="education"><div className="container"><div className="sectionLabel">05 / EDUCATION & ACHIEVEMENTS</div><h2>Learning & <span>recognition.</span></h2><div className="educationList">{education.map(e=><div className="educationCard" key={e.school}><div className="eduIcon"><GraduationCap size={30}/></div><div><div className="smallCaps">{e.date}</div><h3>{e.degree}</h3><p>{e.school}</p><p className="muted">{e.detail}</p></div></div>)}</div><div className="awardNote"><Award size={24}/><span><strong>Smart India Hackathon 2022 Winner</strong> — Privacy scoring browser extension · INR 50,000 award</span></div></div></section>
 <section className="section contactSection" id="contact"><div className="container contactInner"><div className="sectionLabel">06 / SAY HELLO</div><h2>Let's build something <span>meaningful.</span></h2><p>Interested in collaborating on software engineering, AI, or distributed systems? I'd love to connect.</p><div className="actions centered"><a className="primary" href={'mailto:'+profile.email}>Email me <Mail size={18}/></a><a className="secondary" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={18}/></a><a className="secondary" href={profile.resume} target="_blank" rel="noreferrer">View resume <Download size={18}/></a></div></div></section></main>
