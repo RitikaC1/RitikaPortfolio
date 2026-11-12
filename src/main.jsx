@@ -39,13 +39,21 @@ const nav = ['About','Skills','Experience','Projects','Education','Contact'];
 function Portrait(){const [failed,setFailed]=React.useState(false);return <div className="portraitShell">{!failed?<img src={profile.photo} alt="Portrait of Ritika Chaube" onError={()=>setFailed(true)}/>:<div className="portraitFallback"><span>RC</span><small>Add your photo as public/profile.jpg</small></div>}</div>}
 function CompanyLogo({ company, logo }) {
   const [failed, setFailed] = React.useState(false);
+  React.useEffect(() => setFailed(false), [logo]);
   const initials = company.includes('American Express') ? 'AX' : company.includes('Cognizant') ? 'C' : 'UF';
-  return <div className="companyLogo">
-    {failed || !logo ? <span aria-label={`${company} logo unavailable`}>{initials}</span> :
-      <img src={`${import.meta.env.BASE_URL}logos/${logo}`} alt={`${company} logo`}
-        loading="lazy" onError={() => setFailed(true)} />}
-  </div>;
+  const src = `${import.meta.env.BASE_URL}logos/${logo}`;
+  return (
+    <div className="timelineIcon companyTimelineLogo">
+      {failed || !logo ? (
+        <span className="logoFallback" style={{ display: 'block' }} aria-label={`${company} logo unavailable`}>{initials}</span>
+      ) : (
+        <img src={src} alt={`${company} logo`} loading="lazy"
+          onError={() => { console.error('Logo failed to load:', src); setFailed(true); }} />
+      )}
+    </div>
+  );
 }
+
 function App(){
   
 React.useEffect(() => {
@@ -70,24 +78,20 @@ return <>
 <main><section className="hero container" id="home"><div className="heroGlow"/><div className="gridFloor" aria-hidden="true"/><div className="heroContent"><div className="eyebrow"><span className="statusDot"/> <span className="mono">~/ritika-chaube/portfolio</span> <span className="promptCaret">▍</span></div><p className="heroHello"><span className="mono cyan">&gt; </span>Hello, I'm</p><h1>Ritika <span>Chaube.</span></h1><p className="heroRole">{profile.headline}</p><p className="heroIntro">{profile.intro}</p><div className="actions"><a className="primary" href="#projects">Explore my work <ArrowUpRight size={18}/></a><a className="secondary" href={profile.resume} target="_blank" rel="noreferrer">My resume <Download size={18}/></a></div><div className="socials"><a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={21}/></a><a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={21}/></a><a href={'mailto:'+profile.email} aria-label="Email"><Mail size={21}/></a><span className="socialLine"/><span>BUILDING SYSTEMS THAT MATTER</span></div></div><div className="heroPortrait"><div className="portraitTerminal"><Terminal size={14}/> profile.jsx <span className="terminalDots">● ● ●</span></div><Portrait/><div className="portraitCaption">ENGINEER / BUILDER / RESEARCHER</div></div><a href="#about" className="scrollHint">SCROLL TO EXPLORE <ArrowDown size={15}/></a></section>
 <section className="section alt" id="about"><div className="container"><div className="sectionLabel">01 / GET TO KNOW ME</div><div className="aboutGrid"><div><h2>Engineering with <span>impact.</span></h2><div className="accentLine"/></div><div><p className="largeText">{profile.about}</p><p className="muted">From backend services to AI-powered retrieval, I focus on performance, scalability, and thoughtful engineering.</p><a className="textLink" href={profile.github} target="_blank" rel="noreferrer">Explore my GitHub <ArrowUpRight size={17}/></a></div></div></div></section>
 <section className="section" id="skills"><div className="container"><div className="sectionLabel">02 / TECHNICAL TOOLKIT</div><h2>Skills & <span>technologies.</span></h2><p className="sectionIntro">Technologies I have used across engineering, research, and production systems.</p><div className="skillsGrid">{skills.map((s,i)=><div className="skill skillDetailed" key={s.title}><span className="skillNum">0{i+1}</span><Code2 size={22}/><div><strong>{s.title}</strong><p>{s.items}</p></div></div>)}</div></div></section>
-<section className="section alt" id="experience"><div className="container"><div className="sectionLabel">03 / PROFESSIONAL JOURNEY</div><h2>Where I've <span>worked.</span></h2><div className="timeline">
+<section className="section alt" id="experience"><div className="container"><div className="sectionLabel">03 / PROFESSIONAL JOURNEY</div><h2>Where I've <span>worked.</span></h2>
+
+<div className="timeline">
   {experience.map((e, i) => (
     <article className="timelineItem" key={i}>
-      <div className="timelineIcon">
-        <BriefcaseBusiness size={19} />
-      </div>
+
+      <CompanyLogo company={e.company} logo={e.logo} />
 
       <div className="timelineContent">
         <div className="timelineHead">
-          <div className="experienceCompany">
-            <CompanyLogo company={e.company} logo={e.logo} />
-
-            <div>
-              <h3>{e.role}</h3>
-              <strong>{e.company}</strong>
-            </div>
+          <div>
+            <h3>{e.role}</h3>
+            <strong>{e.company}</strong>
           </div>
-
           <span>{e.date}</span>
         </div>
 
@@ -96,6 +100,7 @@ return <>
     </article>
   ))}
 </div>
+
 </div></section>
 <section className="section" id="projects"><div className="container"><div className="sectionLabel">04 / SELECTED WORK</div><div className="sectionHeading"><div><h2>Things I've <span>built.</span></h2><p className="sectionIntro">Selected projects and applied research from my resume.</p></div><a className="textLink" href={profile.github} target="_blank" rel="noreferrer">GitHub repositories <ArrowUpRight size={17}/></a></div><div className="projectGrid">{projects.map(p=><article className="project" key={p.number}><div className="projectTop"><span>{p.number} / {p.type}</span><Sparkles size={20}/></div><div className="projectVisual"><Code2 size={46}/></div><h3>{p.title}</h3><p>{p.description}</p><div className="projectBottom"><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div>{p.link&&<a href={p.link} target="_blank" rel="noreferrer" aria-label={'View '+p.title}><ArrowUpRight/></a>}</div></article>)}</div><p className="muted projectNote">Individual project links can be added in src/main.jsx when you have their repository URLs.</p></div></section>
 <section className="section alt" id="education"><div className="container"><div className="sectionLabel">05 / EDUCATION & ACHIEVEMENTS</div><h2>Learning & <span>recognition.</span></h2><div className="educationList">{education.map(e=><div className="educationCard" key={e.school}><div className="eduIcon"><GraduationCap size={30}/></div><div><div className="smallCaps">{e.date}</div><h3>{e.degree}</h3><p>{e.school}</p><p className="muted">{e.detail}</p></div></div>)}</div><div className="awardNote"><Award size={24}/><span><strong>Smart India Hackathon 2022 Winner</strong> — Privacy scoring browser extension · INR 50,000 award</span></div></div></section>

@@ -128,3 +128,58 @@ body,.header,.alt,.skill,.project,.educationCard,.timelineContent,.themeToggle,f
     font-size: 17px;
   }
 }
+
+
+
+
+/* Tokyo Nights — Company logos on timeline */
+
+.companyTimelineLogo {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  padding: 7px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.companyTimelineLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.logoFallback {
+  display: none;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #6652c8;
+}
+
+.companyTimelineLogo.logoMissing img {
+  display: none;
+}
+
+.companyTimelineLogo.logoMissing .logoFallback {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .companyTimelineLogo {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+    padding: 5px;
+    border-radius: 11px;
+  }
+}
+
+.companyTimelineLogo .logoFallback {
+  display: block;
+}
